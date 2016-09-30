@@ -26,3 +26,17 @@ target/
 *.iws
 *.iml
 *.ipr
+
+# skip local config
+/.project
+/.classpath
+/.settings/
+/bin/
+/target/
+/.springBeans
+/log.info
+.mvn/
+.factorypath
+/.apt_generated/
+/hs*.log
+.env
