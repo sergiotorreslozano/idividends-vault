@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.time.Instant;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,6 +55,14 @@ public class OperationRestRepositoryTest {
 		this.mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 
+	@After
+	public void cleanUp() throws Exception{
+		operationRepository.deleteAll();
+		productRepository.deleteAll();
+		portfolioRepository.deleteAll();
+		clientRepository.deleteAll();
+	}
+
 	@Test
 	public void findAll() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/operations").accept(MediaType.APPLICATION_JSON))
@@ -89,7 +98,7 @@ public class OperationRestRepositoryTest {
 		productRepository.save(product);
 		Client client = new Client("email@mail.com");
 		clientRepository.save(client);
-		Portfolio portfolio = new Portfolio("name", client.getId());
+		Portfolio portfolio = new Portfolio("name",client.getId());
 		portfolioRepository.save(portfolio);
 		Operation operation = new Operation(1d, 1L, 1d, "currency", Instant.now(), "type", product.getId(),
 				portfolio.getId());

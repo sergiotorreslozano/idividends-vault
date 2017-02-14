@@ -3,6 +3,7 @@ package com.idividends.vault.restrepository;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +38,11 @@ public class ProductRestRepositoryTest {
 	@Before
 	public void setUp() throws Exception {
 		this.mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+	}
+
+	@After
+	public void cleanUp(){
+		productRepository.deleteAll();
 	}
 
 	@Test

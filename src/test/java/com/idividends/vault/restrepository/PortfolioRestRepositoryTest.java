@@ -3,6 +3,7 @@ package com.idividends.vault.restrepository;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,6 +44,12 @@ public class PortfolioRestRepositoryTest {
 		this.mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 
+	@After
+	public void cleanUp()throws Exception{
+		portofolioRepository.deleteAll();
+		clientRepository.deleteAll();
+	}
+
 	@Test
 	public void findAll() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/portfolios").accept(MediaType.APPLICATION_JSON))
@@ -53,7 +60,7 @@ public class PortfolioRestRepositoryTest {
 	public void addOne() throws Exception {
 		Client client = new Client("email@mail.com");
 		clientRepository.save(client);
-		Portfolio portfolio = new Portfolio("name", client.getId());
+		Portfolio portfolio = new Portfolio("name",client.getId() );
 		mvc.perform(MockMvcRequestBuilders.post("/portfolios").content(objectMapper.writeValueAsString(portfolio))
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().is2xxSuccessful());
@@ -62,7 +69,7 @@ public class PortfolioRestRepositoryTest {
 	@Test
 	public void addOneFail() throws Exception {
 		// client ID big enough...
-		Portfolio portfolio = new Portfolio("name", 120000L);
+		Portfolio portfolio = new Portfolio("name", null);
 		mvc.perform(MockMvcRequestBuilders.post("/portfolios").content(objectMapper.writeValueAsString(portfolio))
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().is4xxClientError());

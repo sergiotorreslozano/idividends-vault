@@ -27,7 +27,6 @@ public class DatabaseConfig {
 
 	@Bean
 	public DataSource postgresDataSource() {
-		// Changed to a shared DB in projec ad-crm-salesforce
 		String databaseUrl = System.getenv("DATABASE_URL");
 		URI dbUri;
 		try {

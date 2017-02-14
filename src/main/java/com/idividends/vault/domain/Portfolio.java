@@ -26,15 +26,15 @@ public class Portfolio {
 	private Client client;
 
 	/**
-	 * 
+	 *
 	 */
 	public Portfolio() {
 		super();
 	}
 
 	/**
-	 * @param name
-	 * @param clientId
+	 * @param name the name
+	 * @param clientId the client id
 	 */
 	public Portfolio(String name, Long clientId) {
 		super();
